@@ -1,0 +1,301 @@
+---
+title: "DATA 606 Fall 2019 - Final Exam"
+author: "Raghed Mirza"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r, eval=FALSE, echo=FALSE}
+# The following two commands will install a LaTeX installation so that the document can be compiled to PDF. These only need to be run once per R installation.
+install.packages(c('tinytex','kableExtra'))
+tinytex::install_tinytex()
+```
+
+```{r, echo=FALSE}
+options(digits = 2)
+```
+
+# Part I
+
+Please put the answers for Part I next to the question number (2pts each):
+
+1.  b (gasMonth is also quantitative but would be continuous)
+2.  a (left skewed with mean should be smaller than median and a reasonable median should be around 3.5 from the amount of observations)
+3.  d (prospective and retrospective)
+4.  a (large x2 will mean that the null hypothesis is rejected and there is a difference between eye color and hair color) 
+5.  b (please refer to the calculation below)
+```{r}
+q1 <- 37; q3 <- 49.8; iqr_monkeys <- q3 - q1
+
+up_limit <- q3 + 1.5 * iqr_monkeys
+print(up_limit, digits = 4)
+low_limit <- q1 - 1.5 * iqr_monkeys
+print(low_limit, digits = 4)
+```
+
+6.  d
+
+7a. Describe the two distributions (2pts).
+
+Both of the distributions are unimodal. Distribution A is right-skewed and distribution B seems to be normally distributed with almost no skewness.
+
+7b. Explain why the means of these two distributions are similar but the standard deviations are not (2 pts).
+
+The means are similar because distribution B is a sample of A. The difference in standard deviations is due to the sample sizes. The standard deviation will decrease for distribution A as its sample size will grow.
+
+7c. What is the statistical principal that describes this phenomenon (2 pts)?
+
+The statistical principal that explains this phenomenon is called central limit theorem (CLT). The conditions are that the samples in the distributions must be independent and random, not strongly skewed, and the distributions should be normal.
+
+
+# Part II
+
+Consider the four datasets, each with two columns (x and y), provided below. Be sure to replace the `NA` with your answer for each part (e.g. assign the mean of `x` for `data1` to the `data1.x.mean` variable). When you Knit your answer document, a table will be generated with all the answers.
+
+```{r}
+options(digits=2)
+data1 <- data.frame(x=c(10,8,13,9,11,14,6,4,12,7,5),
+					y=c(8.04,6.95,7.58,8.81,8.33,9.96,7.24,4.26,10.84,4.82,5.68))
+data2 <- data.frame(x=c(10,8,13,9,11,14,6,4,12,7,5),
+					y=c(9.14,8.14,8.74,8.77,9.26,8.1,6.13,3.1,9.13,7.26,4.74))
+data3 <- data.frame(x=c(10,8,13,9,11,14,6,4,12,7,5),
+					y=c(7.46,6.77,12.74,7.11,7.81,8.84,6.08,5.39,8.15,6.42,5.73))
+data4 <- data.frame(x=c(8,8,8,8,8,8,8,19,8,8,8),
+					y=c(6.58,5.76,7.71,8.84,8.47,7.04,5.25,12.5,5.56,7.91,6.89))
+```
+
+For each column, calculate (to two decimal places):
+
+#### a. The mean (for x and y separately; 1 pt).
+
+```{r include=TRUE}
+data1.x.mean <- mean(data1$x)
+data1.y.mean <- mean(data1$y)
+data2.x.mean <- mean(data2$x)
+data2.y.mean <- mean(data2$y)
+data3.x.mean <- mean(data3$x)
+data3.y.mean <- mean(data3$y)
+data4.x.mean <- mean(data4$x)
+data4.y.mean <- mean(data4$y)
+data1.x.mean 
+data1.y.mean 
+data2.x.mean 
+data2.y.mean 
+data3.x.mean 
+data3.y.mean 
+data4.x.mean
+data4.y.mean 
+```
+
+#### b. The median (for x and y separately; 1 pt).
+
+```{r include=TRUE}
+data1.x.median <- median(data1$x)
+data1.y.median <- median(data1$y)
+data2.x.median <- median(data2$x)
+data2.y.median <- median(data2$y)
+data3.x.median <- median(data3$x)
+data3.y.median <- median(data3$y)
+data4.x.median <- median(data4$x)
+data4.y.median <- median(data4$y)
+
+data1.x.median 
+data1.y.median 
+data2.x.median
+data2.y.median
+data3.x.median 
+data3.y.median 
+data4.x.median 
+data4.y.median 
+```
+
+#### c. The standard deviation (for x and y separately; 1 pt).
+
+```{r include=TRUE}
+data1.x.sd <- sd(data1$x)
+data1.y.sd <- sd(data1$y)
+data2.x.sd <- sd(data2$x)
+data2.y.sd <- sd(data2$y)
+data3.x.sd <- sd(data3$x)
+data3.y.sd <- sd(data3$y)
+data4.x.sd <- sd(data4$x)
+data4.y.sd <- sd(data4$y)
+
+data1.x.sd
+data1.y.sd  
+data2.x.sd 
+data2.y.sd  
+data3.x.sd 
+data3.y.sd  
+data4.x.sd 
+data4.y.sd
+```
+
+#### For each x and y pair, calculate (also to two decimal places; 1 pt):
+
+#### d. The correlation (1 pt).
+
+```{r include=TRUE}
+data1.correlation <- cor(data1)[1,2]
+data2.correlation <- cor(data2)[1,2]
+data3.correlation <- cor(data3)[1,2]
+data4.correlation <- cor(data4)[1,2]
+
+print(data1.correlation, digits = 2)
+print(data2.correlation, digits = 2)
+print(data3.correlation, digits = 2)
+print(data4.correlation, digits = 2)
+```
+
+#### e. Linear regression equation (2 pts).
+```{r}
+lm1 <- lm(y ~ x, data = data1)
+lm2 <- lm(y ~ x, data = data2)
+lm3 <- lm(y ~ x, data = data3)
+lm4 <- lm(y ~ x, data = data4)
+summary(lm1)
+summary(lm2)
+summary(lm3)
+summary(lm4)
+
+```
+
+
+```{r include=TRUE}
+
+data1.slope <- coef(lm1)["x"]
+data2.slope <- coef(lm2)["x"]
+data3.slope <- coef(lm3)["x"]
+data4.slope <- coef(lm4)["x"]
+
+data1.intercept <- coef(lm1)["(Intercept)"] 
+data2.intercept <- coef(lm2)["(Intercept)"] 
+data3.intercept <- coef(lm3)["(Intercept)"] 
+data4.intercept <- coef(lm4)["(Intercept)"] 
+
+print(data1.slope, digits = 5)
+print(data2.slope, digits = 5)
+print(data3.slope, digits = 5)
+print(data4.slope, digits = 5)
+print(data1.intercept, digits = 5)
+print(data2.intercept, digits = 5)
+print(data3.intercept, digits = 5)
+print(data4.intercept, digits = 5)
+```
+
+#### f. R-Squared (2 pts).
+
+```{r include=TRUE}
+data1.rsquared <- summary(lm1)$r.squared
+data2.rsquared <- summary(lm2)$r.squared
+data3.rsquared <- summary(lm3)$r.squared
+data4.rsquared <- summary(lm4)$r.squared
+
+print(data1.rsquared, digits = 5)
+print(data2.rsquared, digits = 5)
+print(data3.rsquared, digits = 5)
+print(data4.rsquared, digits = 5)
+```
+
+```{r, echo=FALSE, results='asis'}
+##### DO NOT MODIFY THIS R BLOCK! ######
+# This R block will create a table to display all the calculations above in one table.
+library(knitr)
+library(kableExtra)
+results <- data.frame(
+	data1.x = c(data1.x.mean, data1.x.median, data1.x.sd, data1.correlation, data1.intercept, data1.slope, data1.rsquared),
+	data1.y = c(data1.y.mean, data1.y.median, data1.y.sd, NA, NA, NA, NA),
+	data2.x = c(data2.x.mean, data2.x.median, data2.x.sd, data2.correlation, data2.intercept, data2.slope, data2.rsquared),
+	data2.y = c(data2.y.mean, data2.y.median, data2.y.sd, NA, NA, NA, NA),
+	data3.x = c(data3.x.mean, data3.x.median, data3.x.sd, data3.correlation, data3.intercept, data3.slope, data3.rsquared),
+	data3.y = c(data3.y.mean, data3.y.median, data3.y.sd, NA, NA, NA, NA),
+	data4.x = c(data4.x.mean, data4.x.median, data4.x.sd, data4.correlation, data4.intercept, data4.slope, data4.rsquared),
+	data4.y = c(data4.y.mean, data4.y.median, data4.y.sd, NA, NA, NA, NA),
+	stringsAsFactors = FALSE
+)
+row.names(results) <- c('Mean', 'Median', 'SD', 'r', 'Intercept', 'Slope', 'R-Squared')
+names(results) <- c('x','y','x','y','x','y','x','y')
+options(knitr.kable.NA = '')
+kable(results, digits = 2, 
+	  align = 'r',
+	  row.names = TRUE, 
+	  format.args=list(nsmall = 2)) %>%
+	column_spec(2:9, width = ".35in") %>%
+	add_header_above(c(" " = 1, "Data 1" = 2, "Data 2" = 2, "Data 3" = 2, "Data 4" = 2))
+```
+
+#### g. For each pair, is it appropriate to estimate a linear regression model? Why or why not? Be specific as to why for each pair and include appropriate plots! (4 pts)
+
+```{r}
+
+par(mfrow=c(2,2))
+plot(data1)
+plot(lm1$residuals)
+hist(lm1$residuals)
+qqnorm(lm1$residuals)
+qqline(lm1$residuals)
+boxplot(data1$x,data1$y)
+# For data1, the plots seem to depict linearity. Looking at the histogram, the 
+# residuals seem to be randomly distributed but the boxplot is not showing any 
+# outliers. A linear regression model seems plausible.
+
+```
+
+```{r}
+par(mfrow=c(2,2))
+plot(data2)
+plot(lm2$residuals)
+hist(lm2$residuals)
+qqnorm(lm2$residuals)
+qqline(lm2$residuals)
+boxplot(data2$x,data2$y)
+# For data2, it seems that a linear regression model is not possible. The boxblot is 
+# predicting an outlier and the historgram shows a random distribution for the
+# residuals.
+```
+
+
+```{r}
+par(mfrow=c(2,2))
+plot(data3)
+plot(lm3$residuals)
+hist(lm3$residuals)
+qqnorm(lm3$residuals)
+qqline(lm3$residuals)
+boxplot(data3$x,data3$y)
+# For data3, a linear model might be possible once the impact of removing the outlier
+# is carefully determined. 
+```
+
+```{r}
+par(mfrow=c(2,2))
+plot(data4)
+plot(lm4$residuals)
+hist(lm4$residuals)
+qqnorm(lm4$residuals)
+qqline(lm4$residuals)
+boxplot(data4$x,data4$y)
+# For data4, there are two extreme outliers skewing the results. A linear regression model
+# does not seem to be the right choice here.
+```
+
+#### h. Explain why it is important to include appropriate visualizations when analyzing data. Include any visualization(s) you create. (2 pts)
+
+It is much easier to depict a pattern or trend by looking at the data through visualizations. It is often said that a picture is worth a thousand words, and this phrase seems to fit best to the comparison between a tabular form of data versus a visualization (like a graph plot).
+As an example, the data from data2 is produced as a table below:
+```{r}
+head(data2, n = 11)
+```
+
+However, when the same data is put in a graph, it is much easier to see the pattern/trend and any possible outliers:
+```{r}
+plot(data2)
+```
+
+To further illustrate the power of visualization, let us look at the boxplot below:
+```{r}
+boxplot(data2)
+```
+
+It is evident from the above boxplot, that there is a potential outlier (which could be authenticated by further testing). This was not that clear from the regular plot, and certainly, not at all obvious from the table!
